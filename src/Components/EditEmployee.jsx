@@ -3,11 +3,11 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
-function EditEmployee({ name, role, img }) {
+function EditEmployee(props) {
   const [show, setShow] = useState(false);
-  const [employeeName, setName] = useState(name);
-  const [employeeRole, setRole] = useState(role);
-  const [employeeImg, setImg] = useState(img);
+  const [employeeName, setName] = useState(props.name);
+  const [employeeRole, setRole] = useState(props.role);
+  const [employeeImg, setImg] = useState(props.img);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -42,7 +42,7 @@ function EditEmployee({ name, role, img }) {
                 type="text"
                 value={employeeRole}
                 autoFocus
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setRole(e.target.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -51,7 +51,7 @@ function EditEmployee({ name, role, img }) {
                 type="text"
                 value={employeeImg}
                 autoFocus
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setImg(e.target.value)}
               />
             </Form.Group>
             <Form.Group
@@ -64,7 +64,19 @@ function EditEmployee({ name, role, img }) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button
+            variant="primary"
+            onClick={(e) => {
+              e.preventDefault(),
+                props.updateParent(
+                  props.id,
+                  employeeName,
+                  employeeRole,
+                  employeeImg
+                );
+              console.log("done inside the child component");
+            }}
+          >
             Save Changes
           </Button>
         </Modal.Footer>
@@ -74,3 +86,4 @@ function EditEmployee({ name, role, img }) {
 }
 
 export default EditEmployee;
+

@@ -1,56 +1,26 @@
-import Employee from "./Components/Employee";
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
+import Employees from "./pages/Employees";
+import Navbar from "./Components/Navbar"
+import {BrowserRouter,Routes,Route} from "react-router-dom"
+import Customer from "./pages/Customer";
+import Dictionary from "./pages/Dictionary";
+import Definition from "./pages/Definition";
+import NotFound from "./pages/NotFound";
 
 function App() {
-  const [employees, setEmployees] = useState([
-    {
-      id: 1,
-      name: "caleb",
-      role: "dev",
-      img: "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg",
-    },
-    {
-      id: 2,
-      name: "shri",
-      role: "fsd",
-      img: "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg",
-    },
-    {
-      id: 3,
-      name: "gandhi",
-      role: "politician",
-      img: "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg",
-    },
-  ]);
-
-  function updateParent(id, newName, newRole, newImg) {
-    const updatedEmployee = employees.map((employee) => {
-      if (id === employee.id) {
-        return { ...employee, name: newName, role: newRole, img: newImg };
-      }
-      return employee;
-    });
-    setEmployees(updatedEmployee);
-  }
-
-  return (
-    <>
-      <div className="flex flex-wrap justify-center">
-        {employees.map((employee) => (
-          <Employee
-            key={Math.random()}
-            id={employee.id}
-            name={employee.name}
-            role={employee.role}
-            img={employee.img}
-            updateParent={updateParent}
-          />
-        ))}
-      </div>
-      <Button variant="outline-primary">Primary</Button>{" "}
-    </>
-  );
+   return (
+     <BrowserRouter>
+       <Navbar>
+         <Routes>
+           <Route path="/employees" element={<Employees />} />
+           <Route path="/customer" element={<Customer />} />
+           <Route path="/dictionary" element={<Dictionary />} />
+           <Route path="/definition/:search" element={<Definition />} />
+           <Route path="/404" element={<NotFound />} />
+           <Route path="*" element={<NotFound />} />
+         </Routes>
+       </Navbar>
+     </BrowserRouter>
+   );
 }
 
 export default App;
